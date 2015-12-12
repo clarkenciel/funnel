@@ -23,7 +23,7 @@ Voice::Voice ()
 
 Voice::~Voice ()
 {
-  delete values;
+  delete[] values;
 }
 
 /*

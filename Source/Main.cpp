@@ -10,6 +10,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Voice.h"
+#include "VoiceBank.h"
 
 Component* createMainContentComponent();
 
