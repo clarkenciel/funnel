@@ -9,3 +9,4 @@
 */
 
 #include "VoiceBank.h"
+#include "../JuceLibraryCode/JuceHeader.h"

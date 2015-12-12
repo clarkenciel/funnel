@@ -11,8 +11,14 @@
 #ifndef VOICEBANK_H_INCLUDED
 #define VOICEBANK_H_INCLUDED
 
+class VoiceBank
+{
+public:
 
 
+private:
 
+
+};
 
 #endif  // VOICEBANK_H_INCLUDED
