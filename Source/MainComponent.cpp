@@ -10,6 +10,10 @@
 #define MAINCOMPONENT_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "Voice.h"
+#include "VoiceBank.h"
+#include "Hub.h"
+#include "Mixer.h"
 
 //==============================================================================
 /*
@@ -18,75 +22,100 @@
 */
 class MainContentComponent   : public AudioAppComponent
 {
-public:
+  public:
     //==============================================================================
     MainContentComponent()
     {
-        setSize (800, 600);
+      setSize (800, 600);
 
-        // specify the number of input and output channels that we want to open
-        setAudioChannels (2, 2);
+      // specify the number of input and output channels that we want to open
+      setAudioChannels (2, 2);
+
+      // Fetch our current public IP
+      const char* ip;
+      ips = new Array<IPAddress>();
+      IPAddress::findAllAddresses(*ips);
+
+      if (ips->size() > 1)
+        ip = ips->getReference(1).toString().toRawUTF8();
+      else if (ips->size() == 1)
+        ip = ips->getReference(0).toString().toRawUTF8();
+      else
+        ip = "127.0.0.1";
+
+      std::cout << ip << std::endl;
+      
+      // do final bits of set up
+      mCore = new Voice();
+      mModifiers = new VoiceBank();
+      mHub = new Hub(ip, *mModifiers, *mCore);
+      mMixer = new Mixer(*mModifiers, *mCore);
+
     }
 
     ~MainContentComponent()
     {
-        shutdownAudio();
+      shutdownAudio();
     }
 
     //=======================================================================
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override
     {
-        // This function will be called when the audio device is started, or when
-        // its settings (i.e. sample rate, block size, etc) are changed.
+      // This function will be called when the audio device is started, or when
+      // its settings (i.e. sample rate, block size, etc) are changed.
 
-        // You can use this function to initialise any resources you might need,
-        // but be careful - it will be called on the audio thread, not the GUI thread.
+      // You can use this function to initialise any resources you might need,
+      // but be careful - it will be called on the audio thread, not the GUI thread.
 
-        // For more details, see the help for AudioProcessor::prepareToPlay()
+      // For more details, see the help for AudioProcessor::prepareToPlay()
     }
 
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override
     {
-        // Your audio-processing code goes here!
+      // Your audio-processing code goes here!
 
-        // For more details, see the help for AudioProcessor::getNextAudioBlock()
+      // For more details, see the help for AudioProcessor::getNextAudioBlock()
 
-        // Right now we are not producing any data, in which case we need to clear the buffer
-        // (to prevent the output of random noise)
-        bufferToFill.clearActiveBufferRegion();
+      // Right now we are not producing any data, in which case we need to clear the buffer
+      // (to prevent the output of random noise)
+      bufferToFill.clearActiveBufferRegion();
     }
 
     void releaseResources() override
     {
-        // This will be called when the audio device stops, or when it is being
-        // restarted due to a setting change.
+      // This will be called when the audio device stops, or when it is being
+      // restarted due to a setting change.
 
-        // For more details, see the help for AudioProcessor::releaseResources()
+      // For more details, see the help for AudioProcessor::releaseResources()
     }
 
     //=======================================================================
     void paint (Graphics& g) override
     {
-        // (Our component is opaque, so we must completely fill the background with a solid colour)
-        g.fillAll (Colours::black);
+      // (Our component is opaque, so we must completely fill the background with a solid colour)
+      g.fillAll (Colours::black);
 
 
-        // You can add your drawing code here!
+      // You can add your drawing code here!
     }
 
     void resized() override
     {
-        // This is called when the MainContentComponent is resized.
-        // If you add any child components, this is where you should
-        // update their positions.
+      // This is called when the MainContentComponent is resized.
+      // If you add any child components, this is where you should
+      // update their positions.
     }
 
 
-private:
+  private:
     //==============================================================================
 
     // Your private member variables go here...
-
+    Array<IPAddress>* ips;
+    Voice* mCore;
+    VoiceBank* mModifiers;
+    Hub* mHub;
+    Mixer* mMixer;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };
