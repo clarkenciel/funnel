@@ -11,6 +11,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <list>
 #include "Mixer.h"
 #include "VoiceBank.h"
 #include "Voice.h"

@@ -26,7 +26,7 @@ public:
   void setFreq (double nufreq);
   void setAmp (double nuAmp);
 
-private:
+protected: // want these accessible to children
   double* mValues;
   int mNumValues, mWriteIdx, mReadIdx;
   double mPhase, mFreq, mAmp, mPhaseInc;

@@ -5,6 +5,8 @@
               jucerVersion="4.0.1">
   <MAINGROUP id="mTK598" name="Funnel">
     <GROUP id="{93B8C2F2-51C5-7302-36A2-4BD4E78D27D5}" name="Source">
+      <FILE id="JA2CiR" name="CoreVoice.cpp" compile="1" resource="0" file="Source/CoreVoice.cpp"/>
+      <FILE id="zzqOd2" name="CoreVoice.h" compile="0" resource="0" file="Source/CoreVoice.h"/>
       <FILE id="IeUkxa" name="Mixer.cpp" compile="1" resource="0" file="Source/Mixer.cpp"/>
       <FILE id="vPrsPp" name="Mixer.h" compile="0" resource="0" file="Source/Mixer.h"/>
       <FILE id="LHK2V5" name="Hub.cpp" compile="1" resource="0" file="Source/Hub.cpp"/>

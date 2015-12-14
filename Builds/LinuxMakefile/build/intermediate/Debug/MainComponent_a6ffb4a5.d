@@ -495,5 +495,5 @@ build/intermediate/Debug/MainComponent_a6ffb4a5.o: \
  ../../Source/../JuceLibraryCode/modules/juce_video/../../../../../../sdks/juce/modules/juce_video/playback/juce_DirectShowComponent.h \
  ../../Source/../JuceLibraryCode/modules/juce_video/../../../../../../sdks/juce/modules/juce_video/playback/juce_QuickTimeMovieComponent.h \
  ../../Source/../JuceLibraryCode/modules/juce_video/../../../../../../sdks/juce/modules/juce_video/capture/juce_CameraDevice.h \
- ../../Source/Voice.h ../../Source/VoiceBank.h ../../Source/Hub.h \
- ../../Source/Mixer.h
+ ../../Source/Voice.h ../../Source/CoreVoice.h ../../Source/VoiceBank.h \
+ ../../Source/Hub.h ../../Source/Mixer.h

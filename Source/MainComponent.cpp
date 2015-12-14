@@ -11,6 +11,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Voice.h"
+#include "CoreVoice.h"
 #include "VoiceBank.h"
 #include "Hub.h"
 #include "Mixer.h"
@@ -32,25 +33,19 @@ class MainContentComponent   : public AudioAppComponent
       setAudioChannels (2, 2);
 
       // Fetch our current public IP
-      const char* ip;
+      Array<IPAddress>* ips;
       ips = new Array<IPAddress>();
       IPAddress::findAllAddresses(*ips);
 
       if (ips->size() > 1)
-        ip = ips->getReference(1).toString().toRawUTF8();
+        IP = ips->getReference(1).toString().toRawUTF8();
       else if (ips->size() == 1)
-        ip = ips->getReference(0).toString().toRawUTF8();
+        IP = ips->getReference(0).toString().toRawUTF8();
       else
-        ip = "127.0.0.1";
+        IP = "127.0.0.1";
 
-      std::cout << ip << std::endl;
+      std::cout << IP << std::endl;
       
-      // do final bits of set up
-      mCore = new Voice();
-      mModifiers = new VoiceBank();
-      mHub = new Hub(ip, *mModifiers, *mCore);
-      mMixer = new Mixer(*mModifiers, *mCore);
-
     }
 
     ~MainContentComponent()
@@ -68,17 +63,30 @@ class MainContentComponent   : public AudioAppComponent
       // but be careful - it will be called on the audio thread, not the GUI thread.
 
       // For more details, see the help for AudioProcessor::prepareToPlay()
+      
+      // do final bits of set up
+      mCore = new CoreVoice();
+      mModifiers = new VoiceBank();
+      mHub = new Hub(IP, *mModifiers, *mCore);
+      mMixer = new Mixer(*mModifiers, *mCore);
+
     }
 
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override
     {
-      // Your audio-processing code goes here!
+      bufferToFill.clearActiveBufferRegion(); // clear buffer of noise
+      AudioSampleBuffer& buffer         = *bufferToFill.buffer;
+      int start                         = bufferToFill.startSample;
+      int numSamples                    = bufferToFill.numSamples;
+      for (int chan = 0; chan < buffer.getNumChannels(); ++chan)
+      {
+        float* const channelData = buffer.getWritePointer(chan, start);
 
-      // For more details, see the help for AudioProcessor::getNextAudioBlock()
-
-      // Right now we are not producing any data, in which case we need to clear the buffer
-      // (to prevent the output of random noise)
-      bufferToFill.clearActiveBufferRegion();
+        for (int i = 0; i < numSamples; ++i)
+        {
+          channelData[i] = (float) mMixer->mix();
+        }
+      }
     }
 
     void releaseResources() override
@@ -97,6 +105,7 @@ class MainContentComponent   : public AudioAppComponent
 
 
       // You can add your drawing code here!
+
     }
 
     void resized() override
@@ -111,8 +120,8 @@ class MainContentComponent   : public AudioAppComponent
     //==============================================================================
 
     // Your private member variables go here...
-    Array<IPAddress>* ips;
-    Voice* mCore;
+    const char* IP;
+    CoreVoice* mCore;
     VoiceBank* mModifiers;
     Hub* mHub;
     Mixer* mMixer;

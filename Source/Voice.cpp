@@ -19,6 +19,8 @@ Voice::Voice ()
 {
   mPhaseInc = mNumValues * mFreq / SAMPLERATE;
   mValues = new double[mNumValues];
+  for (int i = 0; i < mNumValues; i++)
+    mValues[i] = 0;
 }
 
 Voice::~Voice ()

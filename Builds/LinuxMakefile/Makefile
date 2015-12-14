@@ -49,6 +49,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/CoreVoice_62c20b4.o \
   $(OBJDIR)/Mixer_d95e2aea.o \
   $(OBJDIR)/Hub_5fe018d6.o \
   $(OBJDIR)/VoiceBank_6e9e10ef.o \
@@ -87,6 +88,11 @@ clean:
 strip:
 	@echo Stripping Funnel
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/CoreVoice_62c20b4.o: ../../Source/CoreVoice.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling CoreVoice.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/Mixer_d95e2aea.o: ../../Source/Mixer.cpp
 	-@mkdir -p $(OBJDIR)
