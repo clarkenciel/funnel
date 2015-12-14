@@ -49,11 +49,8 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
-  $(OBJDIR)/HeadEditor_c00d0a76.o \
-  $(OBJDIR)/MouthEditor_64414975.o \
-  $(OBJDIR)/Head_4eeb2269.o \
-  $(OBJDIR)/Mouth_c2fe4ca8.o \
-  $(OBJDIR)/Ear_9fedf2b7.o \
+  $(OBJDIR)/Mixer_d95e2aea.o \
+  $(OBJDIR)/Hub_5fe018d6.o \
   $(OBJDIR)/VoiceBank_6e9e10ef.o \
   $(OBJDIR)/Voice_616ec393.o \
   $(OBJDIR)/MainComponent_a6ffb4a5.o \
@@ -71,6 +68,7 @@ OBJECTS := \
   $(OBJDIR)/juce_gui_basics_9897f6b9.o \
   $(OBJDIR)/juce_gui_extra_f7ca8281.o \
   $(OBJDIR)/juce_opengl_c3461305.o \
+  $(OBJDIR)/juce_osc_d4aba321.o \
   $(OBJDIR)/juce_video_ce77b6a1.o \
 
 .PHONY: clean
@@ -90,29 +88,14 @@ strip:
 	@echo Stripping Funnel
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
 
-$(OBJDIR)/HeadEditor_c00d0a76.o: ../../Source/HeadEditor.cpp
+$(OBJDIR)/Mixer_d95e2aea.o: ../../Source/Mixer.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling HeadEditor.cpp"
+	@echo "Compiling Mixer.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/MouthEditor_64414975.o: ../../Source/MouthEditor.cpp
+$(OBJDIR)/Hub_5fe018d6.o: ../../Source/Hub.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling MouthEditor.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/Head_4eeb2269.o: ../../Source/Head.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling Head.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/Mouth_c2fe4ca8.o: ../../Source/Mouth.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling Mouth.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/Ear_9fedf2b7.o: ../../Source/Ear.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling Ear.cpp"
+	@echo "Compiling Hub.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/VoiceBank_6e9e10ef.o: ../../Source/VoiceBank.cpp
@@ -198,6 +181,11 @@ $(OBJDIR)/juce_gui_extra_f7ca8281.o: ../../../../../sdks/juce/modules/juce_gui_e
 $(OBJDIR)/juce_opengl_c3461305.o: ../../../../../sdks/juce/modules/juce_opengl/juce_opengl.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling juce_opengl.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/juce_osc_d4aba321.o: ../../../../../sdks/juce/modules/juce_osc/juce_osc.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling juce_osc.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/juce_video_ce77b6a1.o: ../../../../../sdks/juce/modules/juce_video/juce_video.cpp

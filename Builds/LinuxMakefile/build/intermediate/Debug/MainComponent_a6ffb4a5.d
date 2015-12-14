@@ -477,6 +477,18 @@ build/intermediate/Debug/MainComponent_a6ffb4a5.o: \
  ../../Source/../JuceLibraryCode/modules/juce_opengl/../../../../../../sdks/juce/modules/juce_opengl/opengl/juce_OpenGLShaderProgram.h \
  ../../Source/../JuceLibraryCode/modules/juce_opengl/../../../../../../sdks/juce/modules/juce_opengl/opengl/juce_OpenGLTexture.h \
  ../../Source/../JuceLibraryCode/modules/juce_opengl/../../../../../../sdks/juce/modules/juce_opengl/utils/juce_OpenGLAppComponent.h \
+ ../../Source/../JuceLibraryCode/modules/juce_osc/juce_osc.h \
+ ../../Source/../JuceLibraryCode/modules/juce_osc/../../../../../../sdks/juce/modules/juce_osc/juce_osc.h \
+ ../../Source/../JuceLibraryCode/modules/juce_osc/../../../../../../sdks/juce/modules/juce_osc/../juce_core/juce_core.h \
+ ../../Source/../JuceLibraryCode/modules/juce_osc/../../../../../../sdks/juce/modules/juce_osc/../juce_events/juce_events.h \
+ ../../Source/../JuceLibraryCode/modules/juce_osc/../../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCTypes.h \
+ ../../Source/../JuceLibraryCode/modules/juce_osc/../../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCTimeTag.h \
+ ../../Source/../JuceLibraryCode/modules/juce_osc/../../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCArgument.h \
+ ../../Source/../JuceLibraryCode/modules/juce_osc/../../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCAddress.h \
+ ../../Source/../JuceLibraryCode/modules/juce_osc/../../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCMessage.h \
+ ../../Source/../JuceLibraryCode/modules/juce_osc/../../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCBundle.h \
+ ../../Source/../JuceLibraryCode/modules/juce_osc/../../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCReceiver.h \
+ ../../Source/../JuceLibraryCode/modules/juce_osc/../../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCSender.h \
  ../../Source/../JuceLibraryCode/modules/juce_video/juce_video.h \
  ../../Source/../JuceLibraryCode/modules/juce_video/../../../../../../sdks/juce/modules/juce_video/juce_video.h \
  ../../Source/../JuceLibraryCode/modules/juce_video/../../../../../../sdks/juce/modules/juce_video/../juce_gui_extra/juce_gui_extra.h \

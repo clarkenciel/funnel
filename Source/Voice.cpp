@@ -12,18 +12,18 @@
 #include "math.h"
 
 Voice::Voice ()
-  : numValues(1024),
-    writeIdx(0),
-    phase(0.0),
-    freq(220.0)
+  : mNumValues(1024),
+    mWriteIdx(0),
+    mPhase(0.0),
+    mFreq(220.0)
 {
-  phaseInc = numValues * freq / SAMPLERATE;
-  values = new double[numValues];
+  mPhaseInc = mNumValues * mFreq / SAMPLERATE;
+  mValues = new double[mNumValues];
 }
 
 Voice::~Voice ()
 {
-  delete[] values;
+  delete[] mValues;
 }
 
 /*
@@ -33,8 +33,8 @@ Voice::~Voice ()
 void
 Voice::addValue (double _v)
 {
-  values[writeIdx] = _v;
-  writeIdx = (writeIdx + 1)% numValues;
+  mValues[mWriteIdx] = _v;
+  mWriteIdx = (mWriteIdx + 1)% mNumValues;
 }
 
 /*
@@ -44,22 +44,32 @@ Voice::addValue (double _v)
 double
 Voice::getNextValue ()
 {
-  int readIdx = (int) floor(phase + 0.5);
-  phase = fmod(phase + phaseInc, numValues);
+  mReadIdx = (int) floor(mPhase + 0.5);
+  mPhase = fmod(mPhase + mPhaseInc, mNumValues);
 
-  return values[readIdx] * amp;
+  return mValues[mReadIdx] * mAmp;
 }
+
+/*
+ * Returns the current value from the table.
+ */
+double
+Voice::getCurrentValue () const
+{
+  return mValues[mReadIdx] * mAmp;
+}
+
 
 void
 Voice::setFreq (double _nf)
 {
-  freq = _nf;
-  phaseInc = numValues * freq / SAMPLERATE;
+  mFreq = _nf;
+  mPhaseInc = mNumValues * mFreq / SAMPLERATE;
 }
 
 void
 Voice::setAmp (double _na)
 {
-  amp = _na;
+  mAmp = _na;
 }
 

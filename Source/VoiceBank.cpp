@@ -8,74 +8,115 @@
   ==============================================================================
 */
 
+#include <utility>
+#include <map>
+#include <memory>
+#include <vector>
+#include <iostream>
 #include "VoiceBank.h"
 
 VoiceBank::VoiceBank ()
-{
-}
+{}
 
+/* Since I'm using maps and smart pointers, I shouldn't
+ * need to worry about deallocating memory manually here
+ */
 VoiceBank::~VoiceBank ()
-{
-  // Since I'm using vectors and smart pointers, I shouldn't
-  // need to worry about deallocating memory manually here
-  
-  //for (auto v = voices.begin(); v != voices.end(); v++)
-  //  delete v;
-  //delete voices;
-}
+{}
 
 /*
- * Add a voice to the tail of the voices vector and return its index
+ * Add a blank voice to the voice map
  */
 int
-VoiceBank::addVoice ()
+VoiceBank::addVoice (const char* key)
 {
-  // with 0-index, the current size will be the index of the 
-  // item push_back'd onto the vector
-  int idx = voices.size(); 
-  voices.push_back( std::unique_ptr<Voice>(new Voice()) );
-  return idx;
+  mVoices.emplace(key, std::unique_ptr<Voice>(new Voice()));
+  mNumVoices = mVoices.size();
+  return mNumVoices;
 }
 
 /*
  * Remove a voice from the bank and return the new number of voices
  */
 int
-VoiceBank::removeVoice (int idx)
+VoiceBank::removeVoice (const char* key)
 {
-  if (idx < voices.size() && idx >= 0)
-    voices.erase(voices.begin() + idx);
-  return voices.size();
+  mVoices.erase(key);
+  mNumVoices = mVoices.size();
+  return mNumVoices;
 }
 
 /*
  * Get the current number of voices
  */
 int
-VoiceBank::getNumVoices ()
+VoiceBank::getNumVoices () const
 {
-  return voices.size();
+  return mNumVoices;
 }
 
 /*
- * Add a value to a specific voice. 
+ * Add a value to a specific voice. Return true on success, false on failure
  * Remember that adding to a voice is an overwriting-with-wraparound operation
  */
-void
-VoiceBank::addValueToVoice (int _vi, double _v)
+bool
+VoiceBank::addValueToVoice (const char* key, double value)
 {
-  voices[_vi]->addValue(_v);
+  try 
+  {
+    mVoices.at(key)->addValue(value);
+    return true;
+  }
+  catch (const std::out_of_range& oor)
+  {
+    std::cerr << "Out of Range error @ VoiceBank::addValueToVoice: ";
+    std::cerr << '\t' << oor.what() << std::endl;
+    std::cerr << '\t' << key << ": " << value << std::endl;
+    return false;
+  }
 }
 
 /*
  * Return a vector containing the current values for each of the voices
  */
 std::vector<double>
-VoiceBank::getValues ()
+VoiceBank::getNextValues ()
 {
-  std::vector<double> out(voices.size(), 0);
-  for (auto v = voices.begin(); v != voices.end(); v++)
-    out.push_back((*v)->getNextValue());
+  std::vector<double> out(mVoices.size(), 0);
+
+  for (std::map<const char*, std::unique_ptr<Voice>>::iterator v = mVoices.begin(); 
+       v != mVoices.end(); v++)
+    out.push_back(v->second->getNextValue());
+
   return out;
 }
 
+/*
+ * Return a vector containing the current values for each of the voices
+ */
+std::vector<double>
+VoiceBank::getCurrentValues () const
+{
+  std::vector<double> out(mVoices.size(), 0);
+
+  for (std::map<const char*, std::unique_ptr<Voice>>::const_iterator v = mVoices.begin(); 
+       v != mVoices.end(); v++)
+    out.push_back(v->second->getCurrentValue());
+
+  return out;
+}
+
+/*
+ * Return a vector of the names of the streams (ips here).
+ */
+std::vector<const char*>
+VoiceBank::getStreamNames () const
+{
+  std::vector<const char*> out;
+
+  for(std::map<const char*,std::unique_ptr<Voice>>::const_iterator it = mVoices.begin();
+      it != mVoices.end(); it++)
+    out.push_back(it->first);
+  
+  return out;
+}

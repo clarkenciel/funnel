@@ -11,7 +11,6 @@
 #ifndef VOICE_H_INCLUDED
 #define VOICE_H_INCLUDED
 
-#include "../JuceLibraryCode/JuceHeader.h"
 
 #define SAMPLERATE 44100.0
 
@@ -23,14 +22,14 @@ public:
 
   void addValue (double value); // does not append, overwrites with wraparound
   double getNextValue ();
+  double getCurrentValue () const; // this doesn't mutate
   void setFreq (double nufreq);
   void setAmp (double nuAmp);
 
 private:
-  double* values;
-  int numValues, writeIdx;
-  
-  double phase, freq, amp, phaseInc;
+  double* mValues;
+  int mNumValues, mWriteIdx, mReadIdx;
+  double mPhase, mFreq, mAmp, mPhaseInc;
 
   int calcReadIdx ();
 };

@@ -94,28 +94,13 @@
       <Add library="kernel32"/>
       <Add library="comctl32"/>
     </Linker>
-    <Unit filename="../../Source/HeadEditor.cpp"/>
-    <Unit filename="../../Source/HeadEditor.h">
+    <Unit filename="../../Source/Mixer.cpp"/>
+    <Unit filename="../../Source/Mixer.h">
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MouthEditor.cpp"/>
-    <Unit filename="../../Source/MouthEditor.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Head.cpp"/>
-    <Unit filename="../../Source/Head.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Mouth.cpp"/>
-    <Unit filename="../../Source/Mouth.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Ear.cpp"/>
-    <Unit filename="../../Source/Ear.h">
+    <Unit filename="../../Source/Hub.cpp"/>
+    <Unit filename="../../Source/Hub.h">
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
@@ -3611,6 +3596,78 @@
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCAddress.cpp">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCAddress.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCArgument.cpp">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCArgument.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCBundle.cpp">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCBundle.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCMessage.cpp">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCMessage.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCReceiver.cpp">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCReceiver.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCSender.cpp">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCSender.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCTimeTag.cpp">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCTimeTag.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCTypes.cpp">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/osc/juce_OSCTypes.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/juce_module_info">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/juce_osc.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
     <Unit filename="../../../../../sdks/juce/modules/juce_video/playback/juce_DirectShowComponent.h">
       <Option compile="0"/>
       <Option link="0"/>
@@ -3676,6 +3733,7 @@
     <Unit filename="../../../../../sdks/juce/modules/juce_gui_basics/juce_gui_basics.cpp"/>
     <Unit filename="../../../../../sdks/juce/modules/juce_gui_extra/juce_gui_extra.cpp"/>
     <Unit filename="../../../../../sdks/juce/modules/juce_opengl/juce_opengl.cpp"/>
+    <Unit filename="../../../../../sdks/juce/modules/juce_osc/juce_osc.cpp"/>
     <Unit filename="../../../../../sdks/juce/modules/juce_video/juce_video.cpp"/>
     <Unit filename="../../JuceLibraryCode/JuceHeader.h">
       <Option compile="0"/>

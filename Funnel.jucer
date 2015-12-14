@@ -5,16 +5,10 @@
               jucerVersion="4.0.1">
   <MAINGROUP id="mTK598" name="Funnel">
     <GROUP id="{93B8C2F2-51C5-7302-36A2-4BD4E78D27D5}" name="Source">
-      <FILE id="g09dnG" name="HeadEditor.cpp" compile="1" resource="0" file="Source/HeadEditor.cpp"/>
-      <FILE id="yRMWyf" name="HeadEditor.h" compile="0" resource="0" file="Source/HeadEditor.h"/>
-      <FILE id="bs9MZx" name="MouthEditor.cpp" compile="1" resource="0" file="Source/MouthEditor.cpp"/>
-      <FILE id="H7Yd8l" name="MouthEditor.h" compile="0" resource="0" file="Source/MouthEditor.h"/>
-      <FILE id="YFBbCZ" name="Head.cpp" compile="1" resource="0" file="Source/Head.cpp"/>
-      <FILE id="jWDtKK" name="Head.h" compile="0" resource="0" file="Source/Head.h"/>
-      <FILE id="MVMwhY" name="Mouth.cpp" compile="1" resource="0" file="Source/Mouth.cpp"/>
-      <FILE id="nd2C3S" name="Mouth.h" compile="0" resource="0" file="Source/Mouth.h"/>
-      <FILE id="b32ByR" name="Ear.cpp" compile="1" resource="0" file="Source/Ear.cpp"/>
-      <FILE id="deByVp" name="Ear.h" compile="0" resource="0" file="Source/Ear.h"/>
+      <FILE id="IeUkxa" name="Mixer.cpp" compile="1" resource="0" file="Source/Mixer.cpp"/>
+      <FILE id="vPrsPp" name="Mixer.h" compile="0" resource="0" file="Source/Mixer.h"/>
+      <FILE id="LHK2V5" name="Hub.cpp" compile="1" resource="0" file="Source/Hub.cpp"/>
+      <FILE id="MEwBZm" name="Hub.h" compile="0" resource="0" file="Source/Hub.h"/>
       <FILE id="TORS7e" name="VoiceBank.cpp" compile="1" resource="0" file="Source/VoiceBank.cpp"/>
       <FILE id="jvYrnQ" name="VoiceBank.h" compile="0" resource="0" file="Source/VoiceBank.h"/>
       <FILE id="kDfSY3" name="Voice.cpp" compile="1" resource="0" file="Source/Voice.cpp"/>
@@ -47,6 +41,7 @@
         <MODULEPATH id="juce_audio_formats" path="../../../sdks/juce/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../../sdks/juce/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../../../sdks/juce/modules"/>
+        <MODULEPATH id="juce_osc" path="../../../sdks/juce/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" cppLanguageStandard="-std=c++11">
@@ -71,6 +66,7 @@
         <MODULEPATH id="juce_audio_formats" path="../../../sdks/juce/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../../sdks/juce/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../../../sdks/juce/modules"/>
+        <MODULEPATH id="juce_osc" path="../../../sdks/juce/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <CODEBLOCKS_WINDOWS targetFolder="Builds/CodeBlocksWindows">
@@ -93,6 +89,7 @@
         <MODULEPATH id="juce_audio_formats" path="../../../sdks/juce/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../../sdks/juce/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../../../sdks/juce/modules"/>
+        <MODULEPATH id="juce_osc" path="../../../sdks/juce/modules"/>
       </MODULEPATHS>
     </CODEBLOCKS_WINDOWS>
   </EXPORTFORMATS>
@@ -110,6 +107,7 @@
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
   </MODULES>
   <JUCEOPTIONS/>
