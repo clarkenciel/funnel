@@ -45,7 +45,7 @@ class MainContentComponent   : public AudioAppComponent
         IP = "127.0.0.1";
 
       std::cout << IP << std::endl;
-      
+
     }
 
     ~MainContentComponent()
@@ -64,28 +64,27 @@ class MainContentComponent   : public AudioAppComponent
 
       // For more details, see the help for AudioProcessor::prepareToPlay()
       
-      // do final bits of set up
+      // do final bits of set up - I think I want these on the audio thread
       mCore = new CoreVoice();
       mModifiers = new VoiceBank();
-      mHub = new Hub(IP, *mModifiers, *mCore);
       mMixer = new Mixer(*mModifiers, *mCore);
+      mHub = new Hub(IP, *mModifiers, *mCore);
 
     }
 
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override
     {
       bufferToFill.clearActiveBufferRegion(); // clear buffer of noise
-      AudioSampleBuffer& buffer         = *bufferToFill.buffer;
-      int start                         = bufferToFill.startSample;
-      int numSamples                    = bufferToFill.numSamples;
+      AudioSampleBuffer& buffer = *bufferToFill.buffer;
+      int start                 = bufferToFill.startSample;
+      int numSamples            = bufferToFill.numSamples;
+
       for (int chan = 0; chan < buffer.getNumChannels(); ++chan)
       {
         float* const channelData = buffer.getWritePointer(chan, start);
 
         for (int i = 0; i < numSamples; ++i)
-        {
           channelData[i] = (float) mMixer->mix();
-        }
       }
     }
 

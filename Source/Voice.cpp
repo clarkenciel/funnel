@@ -8,13 +8,15 @@
   ==============================================================================
 */
 
-#include "Voice.h"
+#include <iostream>
 #include "math.h"
+#include "Voice.h"
 
 Voice::Voice ()
   : mNumValues(1024),
     mWriteIdx(0),
     mPhase(0.0),
+    mAmp(0.5),
     mFreq(220.0)
 {
   mPhaseInc = mNumValues * mFreq / SAMPLERATE;
@@ -33,9 +35,9 @@ Voice::~Voice ()
  * It does not append; it overrides existing values.
  */
 void
-Voice::addValue (double _v)
+Voice::addValue (double val)
 {
-  mValues[mWriteIdx] = _v;
+  mValues[mWriteIdx] += val;
   mWriteIdx = (mWriteIdx + 1)% mNumValues;
 }
 
@@ -46,8 +48,8 @@ Voice::addValue (double _v)
 double
 Voice::getNextValue ()
 {
-  mReadIdx = (int) floor(mPhase + 0.5);
   mPhase = fmod(mPhase + mPhaseInc, mNumValues);
+  mReadIdx = (int) floor(mPhase + 0.5);
 
   return mValues[mReadIdx] * mAmp;
 }

@@ -17,5 +17,6 @@ CoreVoice::CoreVoice ()
   : Voice ()
 {
   for (int i = 0; i < mNumValues; i++)
-    mValues[i] = sin((2 * double_Pi * i) / (double) mNumValues);
+    mValues[i] = sin((2.0 * double_Pi * i) / ((double) mNumValues));
 }
+

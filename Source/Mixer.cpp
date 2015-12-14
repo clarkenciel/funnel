@@ -32,7 +32,20 @@ Mixer::~Mixer ()
  */
 double
 Mixer::mix ()
-{}
+{
+  double sum = 0;
+  std::vector<double> vals = mModifiers.getCurrentValues();
+
+  // mutate the core voice
+  for (std::vector<double>::const_iterator it = vals.begin();
+       it != vals.end(); it++)
+    sum += *it;
+  mCore.addValue(sum);
+  
+  // return the core's current sample
+  double out = mCore.getNextValue();
+  return out;
+}
 
 bool
 Mixer::setBoardVal (const char* key, double val)
