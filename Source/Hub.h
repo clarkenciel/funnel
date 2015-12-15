@@ -42,6 +42,10 @@ class Hub : public OSCReceiver,
     std::vector<const char*> getCurrentTargets () const;
     std::vector<const char*> getPotentialTargets () const;
 
+    // SO BAD!!!!
+    VoiceBank& mIncoming; // we mutate these
+    const Voice& mOutgoing; // we only read these
+
   private:
     String mAddress;
 
@@ -52,8 +56,6 @@ class Hub : public OSCReceiver,
     std::vector<const char*> mTargets; 
     std::vector<const char*> mPotentialTargets; 
 
-    VoiceBank& mIncoming; // we mutate these
-    const Voice& mOutgoing; // we only read these
 
     void addIncoming (const char* ip);
     void removeIncoming (const char* ip);

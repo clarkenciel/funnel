@@ -11,7 +11,8 @@
 #ifndef INCOMINGEDITOR_H_INCLUDED
 #define INCOMINGEDITOR_H_INCLUDED
 
-#include <vector>
+#include <memory>
+#include <map>
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Hub.h"
 
@@ -28,10 +29,12 @@ class IncomingEditor : public Component,
   private:
     Hub& mHub;
 
-    std::vector<Slider> mConnections;
+    std::map<const char*, std::unique_ptr<Slider>> mConnections;
 
     void sliderValueChanged (Slider* sliderThatHasChanged) override;
-
+    void updateIncoming ();
+    bool hasSlider(const char* name);
+    bool hasSlider(Slider* slider);
 };
 
 #endif  // INCOMINGEDITOR_H_INCLUDED
