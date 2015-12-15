@@ -18,6 +18,7 @@ class Voice
 {
 public:
   Voice ();
+  Voice (double amp);
   ~Voice ();
 
   void addValue (double value); // does not append, overwrites with wraparound

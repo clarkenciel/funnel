@@ -84,6 +84,16 @@ Hub::getPotentialTargets () const
   return mPotentialTargets;
 }
 
+/*
+ * Ping network for peers
+ */
+void
+Hub::seekPeers ()
+{
+  greeter.connect("255.255.255.255", PORT);
+  greeter.send("/funnel/hello", String(mAddress));
+}
+
 /* Dispatchees for received messages */
 
 void
@@ -91,12 +101,13 @@ Hub::oscMessageReceived (const OSCMessage& msg)
 {
   String address = msg.getAddressPattern().toString();
 
+  // msg[0] will always be IP
   if (address == String("/funnel/hello"))
-    greet(msg[0]); // msg[0] will be the ip in this case
+    greet(msg[0]);
   else if (address == String("/funnel/active"))
-    std::cout << "implement active!" << std::endl;
+    capture(msg[0], msg[1]);  // msg[1] will be a new value
   else if (address == String("/funnel/inactive"))
-    std::cout << "implement active!" << std::endl;
+    detach(msg[0]);
   else
     std::cerr << "OSC Adress \"" << mAddress << "\" not handled." << std::endl;
 }
@@ -122,26 +133,65 @@ Hub::addPotentialTarget (const char* ip)
 void
 Hub::greet (OSCArgument& arg)
 {
-  String ip = arg.getString();
+  const char* ip = arg.getString().toRawUTF8();
+  bool found = hasPotentialTarget(ip);
+
+  // if we have not seen the address before,
+  // take note and respond with our IP
+  if (!found) 
+  {
+    addPotentialTarget(ip); // toRawUTF8 returns const char*
+    greeter.connect("255.255.255.255", PORT);
+    greeter.send("/funnel/hello", String(mAddress));
+  }
+}
+
+/*
+ * Capture an incoming connection as a stream
+ */
+void
+Hub::capture (OSCArgument& name, OSCArgument& val)
+{
+  const char* ip = name.getString().toRawUTF8();
+  bool found = mIncoming.hasVoice(ip);
+
+  // if we have not seen the address before,
+  // create a new voice
+  if (!found) 
+  {
+    mIncoming.addVoice(ip);
+    mIncoming.addValueToVoice(ip, val.getFloat32());
+  }
+  else
+    mIncoming.addValueToVoice(ip, val.getFloat32());
+}
+
+void
+Hub::detach (OSCArgument& name)
+{
+  const char* ip = name.getString().toRawUTF8();
+  bool found = mIncoming.hasVoice(ip);
+
+  // if we are currently working with the voice, remove it
+  if (found) 
+    mIncoming.removeVoice(ip);
+}
+
+bool
+Hub::hasPotentialTarget (const char* name) const
+{
   bool found = false;
 
   // see if we have the ip as a potential target already
   for (std::vector<const char*>::const_iterator it = mPotentialTargets.begin();
        it != mPotentialTargets.end(); it++)
   {
-    if (ip.compare(*it))
+    if (name == *it)
     {
       found = true;
       break;
     }
   }
 
-  // if we have not seen the address before,
-  // take note and respond with our IP
-  if (!found) 
-  {
-    addPotentialTarget(ip.toRawUTF8()); // toRawUTF8 returns const char*
-    greeter.connect(ip, PORT);
-    greeter.send("/funnel/hello", String(mAddress));
-  }
+  return found;
 }

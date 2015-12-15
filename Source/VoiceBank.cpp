@@ -76,6 +76,33 @@ VoiceBank::addValueToVoice (const char* key, double value)
   }
 }
 
+bool
+VoiceBank::setVoiceAmp (const char* key, double value)
+{
+  try 
+  {
+    mVoices.at(key)->setAmp(value);
+    return true;
+  }
+  catch (const std::out_of_range& oor)
+  {
+    std::cerr << "Out of Range error @ VoiceBank::setVoiceAmp: ";
+    std::cerr << '\t' << oor.what() << std::endl;
+    std::cerr << '\t' << key << ": " << value << std::endl;
+    return false;
+  }
+
+}
+
+bool
+VoiceBank::hasVoice (const char* key) const
+{
+  if (mVoices.find(key) != mVoices.end())
+    return true;
+  else
+    return false;
+}
+
 /*
  * Return a vector containing the current values for each of the voices
  */

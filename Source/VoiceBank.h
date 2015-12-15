@@ -28,10 +28,13 @@ public:
   int getNumVoices () const; // return size of voices vector
 
   bool addValueToVoice (const char* key, double value);
+  bool setVoiceAmp (const char* key, double value);
+  bool hasVoice (const char* key) const;
+
   std::vector<double> getNextValues ();
   std::vector<double> getCurrentValues () const; // only reads so const
   std::vector<const char*> getStreamNames () const;
-
+  std::map<const char*, double> getAmplitudes () const;
 
 private:
   int mNumVoices;

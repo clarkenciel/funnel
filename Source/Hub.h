@@ -32,8 +32,10 @@ class Hub : public OSCReceiver,
 
     void oscMessageReceived (const OSCMessage& message) override;
     void send (); // only reads
-    void addTarget (const char*);
-    void removeTarget (const char*);
+    void addTarget (const char* ip);
+    void removeTarget (const char* ip);
+    void seekPeers ();
+    bool hasPotentialTarget (const char* ip) const;
 
     std::vector<const char*> getCurrentIncoming () const;
     std::vector<const char*> getCurrentTargets () const;
@@ -54,7 +56,9 @@ class Hub : public OSCReceiver,
 
     void addIncoming (const char* ip);
     void removeIncoming (const char* ip);
-    void greet (OSCArgument& arg); // add new potential target and respond
+    void greet (OSCArgument& name); // add new potential target and respond
+    void capture (OSCArgument& name, OSCArgument& val);
+    void detach (OSCArgument& name);
     void addPotentialTarget (const char* ip);
 };
 

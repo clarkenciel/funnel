@@ -25,6 +25,12 @@ Voice::Voice ()
     mValues[i] = 0;
 }
 
+Voice::Voice (double a)
+  : Voice ()
+{
+  mAmp = a;
+}
+
 Voice::~Voice ()
 {
   delete[] mValues;
@@ -65,15 +71,15 @@ Voice::getCurrentValue () const
 
 
 void
-Voice::setFreq (double _nf)
+Voice::setFreq (double freq)
 {
-  mFreq = _nf;
+  mFreq = freq;
   mPhaseInc = mNumValues * mFreq / SAMPLERATE;
 }
 
 void
-Voice::setAmp (double _na)
+Voice::setAmp (double amp)
 {
-  mAmp = _na;
+  mAmp = amp;
 }
 
