@@ -16,8 +16,9 @@
 #include "VoiceBank.h"
 #include "Voice.h"
 
-Mixer::Mixer (const VoiceBank& mods, Voice& co)
-  : mModifiers(mods),
+Mixer::Mixer (Hub& sender, const VoiceBank& mods, Voice& co)
+  : mSender(sender),
+    mModifiers(mods),
     mCore(co)
 {}
 
@@ -41,6 +42,9 @@ Mixer::mix ()
        it != vals.end(); it++)
     sum += *it;
   mCore.addValue(sum);
+
+  // send out the message (with the mutations)
+  mSender.send();
   
   // return the core's current sample
   double out = mCore.getNextValue();

@@ -67,8 +67,8 @@ class MainContentComponent   : public AudioAppComponent
       // do final bits of set up - I think I want these on the audio thread
       mCore = new CoreVoice();
       mModifiers = new VoiceBank();
-      mMixer = new Mixer(*mModifiers, *mCore);
       mHub = new Hub(IP, *mModifiers, *mCore);
+      mMixer = new Mixer(*mHub, *mModifiers, *mCore);
 
     }
 

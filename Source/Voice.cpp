@@ -19,7 +19,7 @@ Voice::Voice ()
     mAmp(0.5),
     mFreq(220.0)
 {
-  mPhaseInc = mNumValues * mFreq / SAMPLERATE;
+  mPhaseInc = (mNumValues * mFreq) / SAMPLERATE;
   mValues = new double[mNumValues];
   for (int i = 0; i < mNumValues; i++)
     mValues[i] = 0;
@@ -55,7 +55,7 @@ double
 Voice::getNextValue ()
 {
   mPhase = fmod(mPhase + mPhaseInc, mNumValues);
-  mReadIdx = (int) floor(mPhase + 0.5);
+  mReadIdx = (int) floor(mPhase);
 
   return mValues[mReadIdx] * mAmp;
 }
@@ -74,7 +74,7 @@ void
 Voice::setFreq (double freq)
 {
   mFreq = freq;
-  mPhaseInc = mNumValues * mFreq / SAMPLERATE;
+  mPhaseInc = (mNumValues * mFreq) / SAMPLERATE;
 }
 
 void

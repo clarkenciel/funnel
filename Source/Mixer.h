@@ -11,14 +11,15 @@
 #ifndef MIXER_H_INCLUDED
 #define MIXER_H_INCLUDED
 
+#include <map>
 #include "Voice.h"
 #include "VoiceBank.h"
-#include <map>
+#include "Hub.h"
 
 class Mixer
 {
   public:
-    Mixer (const VoiceBank& modifiers, Voice& core);
+    Mixer (Hub& sender, const VoiceBank& modifiers, Voice& core);
     ~Mixer ();
 
     double mix();
@@ -31,6 +32,7 @@ class Mixer
 
     const VoiceBank& mModifiers; // read only
     Voice& mCore; // will be modified when mixing happens
+    Hub& mSender; // only used for its send function
 };
 
 #endif  // MIXER_H_INCLUDED

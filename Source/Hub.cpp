@@ -33,12 +33,13 @@ Hub::~Hub ()
 void
 Hub::send ()
 {
-  for (std::vector<const char*>::iterator tgt = mTargets.begin();
+  for (std::vector<const char*>::const_iterator tgt = mTargets.begin();
        tgt != mTargets.end(); tgt++)
   {
     output.connect(*tgt, PORT);
+    std::cout << "sending to: " << *tgt << std::endl;
     if (! output.send("/funnel/active", (float) mOutgoing.getCurrentValue()) )
-      std::cerr << "Unable to send to: " << *tgt << std::endl;
+      std::cout << "Unable to send to: " << *tgt << std::endl;
   }
 }
 
