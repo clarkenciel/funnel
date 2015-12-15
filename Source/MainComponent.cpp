@@ -127,7 +127,6 @@ class MainContentComponent   : public AudioAppComponent,
       // (Our component is opaque, so we must completely fill the background with a solid colour)
       g.fillAll (Colours::black);
 
-
       // You can add your drawing code here!
     }
 

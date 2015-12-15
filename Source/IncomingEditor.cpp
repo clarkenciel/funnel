@@ -28,6 +28,7 @@ IncomingEditor::paint (Graphics& g)
 {
   g.fillAll (Colours::white);
   updateIncoming();
+  std::cout << "Num incoming: " << mConnections.size() << std::endl;
 }
 
 /*
