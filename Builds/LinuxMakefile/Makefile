@@ -49,7 +49,6 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
-  $(OBJDIR)/PingButton_1dde8acd.o \
   $(OBJDIR)/OutgoingEditor_4ba76702.o \
   $(OBJDIR)/IncomingEditor_8c070b3c.o \
   $(OBJDIR)/CoreVoice_62c20b4.o \
@@ -91,11 +90,6 @@ clean:
 strip:
 	@echo Stripping Funnel
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
-
-$(OBJDIR)/PingButton_1dde8acd.o: ../../Source/PingButton.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling PingButton.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/OutgoingEditor_4ba76702.o: ../../Source/OutgoingEditor.cpp
 	-@mkdir -p $(OBJDIR)

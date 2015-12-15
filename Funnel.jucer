@@ -5,8 +5,6 @@
               jucerVersion="4.0.1">
   <MAINGROUP id="mTK598" name="Funnel">
     <GROUP id="{93B8C2F2-51C5-7302-36A2-4BD4E78D27D5}" name="Source">
-      <FILE id="dS9z7S" name="PingButton.cpp" compile="1" resource="0" file="Source/PingButton.cpp"/>
-      <FILE id="wR9wSc" name="PingButton.h" compile="0" resource="0" file="Source/PingButton.h"/>
       <FILE id="ICbdMG" name="OutgoingEditor.cpp" compile="1" resource="0"
             file="Source/OutgoingEditor.cpp"/>
       <FILE id="Iu0s1j" name="OutgoingEditor.h" compile="0" resource="0"
