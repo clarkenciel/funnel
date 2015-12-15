@@ -16,7 +16,7 @@ IncomingEditor::IncomingEditor (Hub& hub, String name)
 {}
 
 void
-IncomingEditor::buttonClicked (Button* button)
+IncomingEditor::sliderValueChanged (Slider* slider)
 {}
 
 void

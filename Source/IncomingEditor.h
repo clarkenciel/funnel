@@ -16,7 +16,7 @@
 #include "Hub.h"
 
 class IncomingEditor : public Component,
-                       public Button::Listener
+                       public Slider::Listener
 {
   public:
     IncomingEditor (Hub& hub, String name = "incomingEditor");
@@ -28,9 +28,9 @@ class IncomingEditor : public Component,
   private:
     Hub& mHub;
 
-    std::vector<Button> mTargets;
+    std::vector<Slider> mConnections;
 
-    void  buttonClicked (Button* button) override;
+    void sliderValueChanged (Slider* sliderThatHasChanged) override;
 
 };
 
