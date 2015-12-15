@@ -50,7 +50,7 @@ OutgoingEditor::updateTargets ()
     {
       mTargets.push_back(
           std::unique_ptr<ToggleButton>(new ToggleButton(String(*tgt))));
-      addAndMakeVisible(**mTargets.end());
+      addAndMakeVisible(**(mTargets.end() - 1));
     }
   }
 }

@@ -24,10 +24,9 @@ Hub::Hub (String address, VoiceBank& is, const Voice& os)
   addListener(this, "/funnel/hello");    // detection
   addListener(this, "/funnel/active");   // sending values
   addListener(this, "/funnel/inactive"); // not sending values
+  connect(PORT);
 }
 
-Hub::~Hub ()
-{}
 
 /* Primary exposed interface */
 
@@ -110,7 +109,7 @@ void
 Hub::oscMessageReceived (const OSCMessage& msg)
 {
   String address = msg.getAddressPattern().toString();
-
+    std::cerr << "Received: " << address << std::endl;
   // msg[0] will always be IP
   if (address == String("/funnel/hello"))
     greet(msg[0]);
