@@ -28,7 +28,6 @@ IncomingEditor::paint (Graphics& g)
 {
   g.fillAll (Colours::white);
   updateIncoming();
-  std::cout << "Num incoming: " << mConnections.size() << std::endl;
 }
 
 /*
@@ -49,7 +48,7 @@ IncomingEditor::updateIncoming ()
           std::unique_ptr<Slider>(new Slider(String(*tgt))));
       (*mConnections.end()->second).setSliderStyle(Slider::LinearHorizontal);
       (*mConnections.end()->second).setRange(0.0,1.0,0.01);
-      addAndMakeVisible((*mConnections.end()->second));
+      addAndMakeVisible(mConnections.at(*tgt).get());
     }
   }
 }
