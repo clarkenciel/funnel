@@ -13,15 +13,22 @@
 
 #include <vector>
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "Hub.h"
 
 class IncomingEditor : public Component,
                        public Button::Listener
 {
   public:
-    IncomingEditor (String name = "incomingEditor");
+    IncomingEditor (Hub& hub, String name = "incomingEditor");
     ~IncomingEditor () {};
+    
+
+    void paint (Graphics& g);
 
   private:
+    Hub& mHub;
+
+    std::vector<Button> mTargets;
 
     void  buttonClicked (Button* button) override;
 

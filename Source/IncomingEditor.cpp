@@ -10,6 +10,17 @@
 
 #include "IncomingEditor.h"
 
-IncomingEditor::IncomingEditor (String name)
-  : Component(name)
+IncomingEditor::IncomingEditor (Hub& hub, String name)
+  : Component(name),
+    mHub(hub)
 {}
+
+void
+IncomingEditor::buttonClicked (Button* button)
+{}
+
+void
+IncomingEditor::paint (Graphics& g)
+{
+  g.fillAll (Colours::white);
+}

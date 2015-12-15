@@ -10,6 +10,17 @@
 
 #include "OutgoingEditor.h"
 
-OutgoingEditor::OutgoingEditor (String name)
-  : Component(name)
+OutgoingEditor::OutgoingEditor (Hub& hub, String name)
+  : Component(name),
+    mHub(hub)
 {}
+
+void
+OutgoingEditor::buttonClicked (Button* button)
+{}
+
+void
+OutgoingEditor::paint (Graphics& g)
+{
+  g.fillAll (Colours::white);
+}

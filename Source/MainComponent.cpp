@@ -66,10 +66,14 @@ class MainContentComponent   : public AudioAppComponent,
       addAndMakeVisible(mPing);
 
       // set up outgoing editor
-      mIncomingEditor.setBounds(w/2, 120, w - 10, h - 10);
-      addAndMakevisible(mIncomingEditor);
+      mIncoming = new IncomingEditor(*mHub, "Incoming Connections");
+      mIncoming->setBounds(w/2, h/3, w - 10, h - 10);
+      addAndMakeVisible(mIncoming);
       
       // set up incoming editor
+      mOutgoing = new OutgoingEditor(*mHub, "Outgoing Connections");
+      mOutgoing->setBounds(0, h/3, w/2, h-10);
+      addAndMakeVisible(mOutgoing);
       
     }
 
@@ -151,8 +155,8 @@ class MainContentComponent   : public AudioAppComponent,
     Hub* mHub;
     Mixer* mMixer;
 
-    IncomingEditor mIncoming;
-    OutgoingEditor mOutgoing;
+    IncomingEditor* mIncoming;
+    OutgoingEditor* mOutgoing;
     TextButton mPing;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
