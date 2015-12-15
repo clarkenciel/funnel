@@ -12,13 +12,14 @@
 
 #define PORT 57001
 
-Hub::Hub (const char* address, VoiceBank& is, const Voice& os)
+Hub::Hub (String address, VoiceBank& is, const Voice& os)
   : mAddress(address),
     mIncoming(is),
     mOutgoing(os),
     mTargets(0),
     mPotentialTargets(0)
 {
+  std::cout << "Hub with IP: " << mAddress.toRawUTF8() << std::endl;
   // set up listening
   addListener(this, "/funnel/hello");    // detection
   addListener(this, "/funnel/active");   // sending values
@@ -38,7 +39,9 @@ Hub::send ()
   {
     output.connect(*tgt, PORT);
     std::cout << "sending to: " << *tgt << std::endl;
-    if (! output.send("/funnel/active", (float) mOutgoing.getCurrentValue()) )
+    if (! output.send("/funnel/active",
+                      mAddress,
+                      (float) mOutgoing.getCurrentValue()) )
       std::cout << "Unable to send to: " << *tgt << std::endl;
   }
 }
@@ -64,7 +67,12 @@ Hub::removeTarget (const char* ip)
   for (; it != mTargets.end() || *it != ip; it++)
 
   // only erase if iterator did not hit the end of the vector
-  if (it != mTargets.end()) mTargets.erase(it);
+  if (it != mTargets.end())
+  {
+    mTargets.erase(it);
+    greeter.connect(*it, PORT);
+    greeter.send("/funnel/inactive",mAddress);
+  }
 }
 
 std::vector<const char*>
@@ -91,6 +99,7 @@ Hub::getPotentialTargets () const
 void
 Hub::seekPeers ()
 {
+  std::cout << "broadcasting: " << mAddress << std::endl;
   greeter.connect("255.255.255.255", PORT);
   greeter.send("/funnel/hello", String(mAddress));
 }

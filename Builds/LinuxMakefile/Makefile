@@ -49,6 +49,9 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/PingButton_1dde8acd.o \
+  $(OBJDIR)/OutgoingEditor_4ba76702.o \
+  $(OBJDIR)/IncomingEditor_8c070b3c.o \
   $(OBJDIR)/CoreVoice_62c20b4.o \
   $(OBJDIR)/Mixer_d95e2aea.o \
   $(OBJDIR)/Hub_5fe018d6.o \
@@ -88,6 +91,21 @@ clean:
 strip:
 	@echo Stripping Funnel
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/PingButton_1dde8acd.o: ../../Source/PingButton.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling PingButton.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/OutgoingEditor_4ba76702.o: ../../Source/OutgoingEditor.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling OutgoingEditor.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/IncomingEditor_8c070b3c.o: ../../Source/IncomingEditor.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling IncomingEditor.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/CoreVoice_62c20b4.o: ../../Source/CoreVoice.cpp
 	-@mkdir -p $(OBJDIR)

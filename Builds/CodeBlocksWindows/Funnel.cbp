@@ -94,6 +94,21 @@
       <Add library="kernel32"/>
       <Add library="comctl32"/>
     </Linker>
+    <Unit filename="../../Source/PingButton.cpp"/>
+    <Unit filename="../../Source/PingButton.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/OutgoingEditor.cpp"/>
+    <Unit filename="../../Source/OutgoingEditor.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/IncomingEditor.cpp"/>
+    <Unit filename="../../Source/IncomingEditor.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
     <Unit filename="../../Source/CoreVoice.cpp"/>
     <Unit filename="../../Source/CoreVoice.h">
       <Option compile="0"/>

@@ -27,7 +27,7 @@ class Hub : public OSCReceiver,
             public OSCReceiver::ListenerWithOSCAddress<OSCReceiver::RealtimeCallback>
 {
   public:
-    Hub (const char* address, VoiceBank& inStreams, const Voice& outStream);
+    Hub (String address, VoiceBank& inStreams, const Voice& outStream);
     ~Hub ();
 
     void oscMessageReceived (const OSCMessage& message) override;
@@ -42,7 +42,7 @@ class Hub : public OSCReceiver,
     std::vector<const char*> getPotentialTargets () const;
 
   private:
-    const char* mAddress;
+    String mAddress;
 
     // avoid greet messages locking the output
     OSCSender output, greeter;
@@ -60,6 +60,7 @@ class Hub : public OSCReceiver,
     void capture (OSCArgument& name, OSCArgument& val);
     void detach (OSCArgument& name);
     void addPotentialTarget (const char* ip);
+
 };
 
 

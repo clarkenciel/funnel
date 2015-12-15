@@ -1,11 +1,11 @@
 /*
-  ==============================================================================
+   ==============================================================================
 
-    Voice.h
-    Created: 7 Dec 2015 1:37:52pm
-    Author:  root
+   Voice.h
+Created: 7 Dec 2015 1:37:52pm
+Author:  root
 
-  ==============================================================================
+==============================================================================
 */
 
 #ifndef VOICE_H_INCLUDED
@@ -16,23 +16,24 @@
 
 class Voice
 {
-public:
-  Voice ();
-  Voice (double amp);
-  ~Voice ();
+  public:
+    Voice ();
+    Voice (double amp);
+    ~Voice ();
 
-  void addValue (double value); // does not append, overwrites with wraparound
-  double getNextValue ();
-  double getCurrentValue () const; // this doesn't mutate
-  void setFreq (double nufreq);
-  void setAmp (double nuAmp);
+    void addValue (double value); // does not append, overwrites with wraparound
+    double getNextValue ();
+    double getCurrentValue () const; // this doesn't mutate
+    void setFreq (double nufreq);
+    void setAmp (double nuAmp);
 
-protected: // want these accessible to children
-  double* mValues;
-  int mNumValues, mWriteIdx, mReadIdx;
-  double mPhase, mFreq, mAmp, mPhaseInc;
+  protected: // want these accessible to children
+    double* mValues;
+    int mNumValues, mWriteIdx, mReadIdx;
+    double mPhase, mFreq, mAmp, mPhaseInc;
 
-  int calcReadIdx ();
+    int calcReadIdx ();
+
 };
 
 
