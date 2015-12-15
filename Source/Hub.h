@@ -36,6 +36,7 @@ class Hub : public OSCReceiver,
     void removeTarget (const char* ip);
     void seekPeers ();
     bool hasPotentialTarget (const char* ip) const;
+    bool hasCurrentTarget (const char* ip) const;
 
     std::vector<const char*> getCurrentIncoming () const;
     std::vector<const char*> getCurrentTargets () const;

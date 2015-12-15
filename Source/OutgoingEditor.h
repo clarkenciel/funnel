@@ -12,6 +12,7 @@
 #define OUTGOINGEDITOR_H_INCLUDED
 
 #include <vector>
+#include <memory>
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Hub.h"
 
@@ -27,11 +28,11 @@ class OutgoingEditor : public Component,
   private:
     Hub& mHub;
 
-    std::vector<Button> mTargets;
+    std::vector<std::unique_ptr<ToggleButton>> mTargets;
 
-    void  buttonClicked (Button* button) override;
-
-
+    void buttonClicked (Button* button) override;
+    void updateTargets();
+    bool hasButton (const char* name);
 };
 
 #endif  // OUTGOINGEDITOR_H_INCLUDED

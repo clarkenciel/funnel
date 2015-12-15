@@ -205,3 +205,22 @@ Hub::hasPotentialTarget (const char* name) const
 
   return found;
 }
+
+bool
+Hub::hasCurrentTarget (const char* name) const
+{
+  bool found = false;
+
+  // see if we have the ip as a potential target already
+  for (std::vector<const char*>::const_iterator it = mTargets.begin();
+       it != mTargets.end(); it++)
+  {
+    if (name == *it)
+    {
+      found = true;
+      break;
+    }
+  }
+
+  return found;
+}
