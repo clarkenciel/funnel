@@ -146,19 +146,23 @@ void
 Hub::greet (OSCArgument& arg)
 {
   String ip = arg.getString();
-  if (mAddress.compare(ip))
+
+  // seems strane that this isn't !mAddress.compare ...
+  if (!(mAddress == ip) && !(ip.compare("255.255.255.255")))
   {
     std::cout << mAddress << " not same as " << ip << std::endl;
     bool found = hasPotentialTarget(ip.toRawUTF8());
 
     // if we have not seen the address before,
-    // take note and respond with our IP
+    // take note 
     if (!found) 
     {
       addPotentialTarget(ip.toRawUTF8()); // toRawUTF8 returns const char*
+
+      // and respond with our IP
+      greeter.connect("255.255.255.255", PORT);
+      greeter.send("/funnel/hello", mAddress);
     }
-    greeter.connect("255.255.255.255", PORT);
-    greeter.send("/funnel/hello", mAddress);
   }
 }
 
@@ -196,20 +200,15 @@ Hub::detach (OSCArgument& name)
 bool
 Hub::hasPotentialTarget (const char* name) const
 {
-  bool found = false;
-
   // see if we have the ip as a potential target already
   for (std::vector<const char*>::const_iterator it = mPotentialTargets.begin();
        it != mPotentialTargets.end(); it++)
   {
     if (name == *it)
-    {
-      found = true;
-      break;
-    }
+      return true;
   }
 
-  return found;
+  return false;
 }
 
 bool

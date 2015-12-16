@@ -55,6 +55,7 @@ OutgoingEditor::updateTargets ()
     {
       mTargets.push_back(
           std::unique_ptr<ToggleButton>(new ToggleButton(String(*tgt))));
+      std::cout << "Target: " << *tgt << std::endl;
       ToggleButton& btn= **(mTargets.end() - 1);
       btn.setBounds(0, cnt * (h / num), w, cnt++ * (h / num) + (h / num));
       addAndMakeVisible(btn);
