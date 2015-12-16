@@ -32,7 +32,7 @@ class OutgoingEditor : public Component,
     std::vector<std::unique_ptr<ToggleButton>> mTargets;
 
     void buttonClicked (Button* button) override;
-    bool hasButton (const char* name);
+    bool hasButton (String name);
 };
 
 #endif  // OUTGOINGEDITOR_H_INCLUDED

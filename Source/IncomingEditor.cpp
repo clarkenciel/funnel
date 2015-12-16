@@ -38,8 +38,8 @@ IncomingEditor::paint (Graphics& g)
 void
 IncomingEditor::updateIncoming ()
 {
-  std::vector<const char*> incoming = mHub.getCurrentIncoming();
-  for (std::vector<const char*>::iterator tgt = incoming.begin();
+  std::vector<String> incoming = mHub.getCurrentIncoming();
+  for (std::vector<String>::iterator tgt = incoming.begin();
        tgt != incoming.end(); tgt++)
   {
     if (!hasSlider(*tgt))
@@ -54,9 +54,9 @@ IncomingEditor::updateIncoming ()
 }
 
 bool
-IncomingEditor::hasSlider(const char* name)
+IncomingEditor::hasSlider(String name)
 {
-  std::map<const char*, std::unique_ptr<Slider>>::iterator sld;
+  std::map<String, std::unique_ptr<Slider>>::iterator sld;
   for (sld = mConnections.begin(); sld != mConnections.end(); sld++)
   {
     if (sld->first == name)
@@ -68,7 +68,7 @@ IncomingEditor::hasSlider(const char* name)
 bool
 IncomingEditor::hasSlider(Slider* slider)
 {
-  std::map<const char*, std::unique_ptr<Slider>>::iterator sld;
+  std::map<String, std::unique_ptr<Slider>>::iterator sld;
   for (sld = mConnections.begin(); sld != mConnections.end(); sld++)
   {
     if (sld->second.get() == slider)

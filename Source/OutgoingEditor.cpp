@@ -43,11 +43,11 @@ OutgoingEditor::paint (Graphics& g)
 void
 OutgoingEditor::updateTargets ()
 {
-  std::vector<const char*> potential = mHub.getPotentialTargets();
+  std::vector<String> potential = mHub.getPotentialTargets();
   int cnt = 0, w = getWidth(), h = getHeight();
   float num = (float) potential.size();
 
-  for (std::vector<const char*>::iterator tgt = potential.begin();
+  for (std::vector<String>::iterator tgt = potential.begin();
        tgt != potential.end(); tgt++)
   {
     // set up a new button
@@ -65,7 +65,7 @@ OutgoingEditor::updateTargets ()
 }
 
 bool
-OutgoingEditor::hasButton(const char* name)
+OutgoingEditor::hasButton(String name)
 {
   std::vector<std::unique_ptr<ToggleButton>>::iterator btn;
 

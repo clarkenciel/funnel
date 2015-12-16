@@ -28,7 +28,7 @@ VoiceBank::~VoiceBank ()
  * Add a blank voice to the voice map
  */
 int
-VoiceBank::addVoice (const char* key)
+VoiceBank::addVoice (String key)
 {
   mVoices.emplace(key, std::unique_ptr<Voice>(new Voice()));
   mNumVoices = mVoices.size();
@@ -39,7 +39,7 @@ VoiceBank::addVoice (const char* key)
  * Remove a voice from the bank and return the new number of voices
  */
 int
-VoiceBank::removeVoice (const char* key)
+VoiceBank::removeVoice (String key)
 {
   mVoices.erase(key);
   mNumVoices = mVoices.size();
@@ -60,7 +60,7 @@ VoiceBank::getNumVoices () const
  * Remember that adding to a voice is an overwriting-with-wraparound operation
  */
 bool
-VoiceBank::addValueToVoice (const char* key, double value)
+VoiceBank::addValueToVoice (String key, double value)
 {
   try 
   {
@@ -77,7 +77,7 @@ VoiceBank::addValueToVoice (const char* key, double value)
 }
 
 bool
-VoiceBank::setVoiceAmp (const char* key, double value)
+VoiceBank::setVoiceAmp (String key, double value)
 {
   try 
   {
@@ -95,7 +95,7 @@ VoiceBank::setVoiceAmp (const char* key, double value)
 }
 
 bool
-VoiceBank::hasVoice (const char* key) const
+VoiceBank::hasVoice (String key) const
 {
   if (mVoices.find(key) != mVoices.end())
     return true;
@@ -111,7 +111,7 @@ VoiceBank::getNextValues ()
 {
   std::vector<double> out(mVoices.size(), 0);
 
-  for (std::map<const char*, std::unique_ptr<Voice>>::iterator v = mVoices.begin(); 
+  for (std::map<String, std::unique_ptr<Voice>>::iterator v = mVoices.begin(); 
        v != mVoices.end(); v++)
     out.push_back(v->second->getNextValue());
 
@@ -126,7 +126,7 @@ VoiceBank::getCurrentValues () const
 {
   std::vector<double> out(mVoices.size(), 0);
 
-  for (std::map<const char*, std::unique_ptr<Voice>>::const_iterator v = mVoices.begin(); 
+  for (std::map<String, std::unique_ptr<Voice>>::const_iterator v = mVoices.begin(); 
        v != mVoices.end(); v++)
     out.push_back(v->second->getCurrentValue());
 
@@ -136,12 +136,12 @@ VoiceBank::getCurrentValues () const
 /*
  * Return a vector of the names of the streams (ips here).
  */
-std::vector<const char*>
+std::vector<String>
 VoiceBank::getStreamNames () const
 {
-  std::vector<const char*> out;
+  std::vector<String> out;
 
-  for(std::map<const char*,std::unique_ptr<Voice>>::const_iterator it = mVoices.begin();
+  for(std::map<String,std::unique_ptr<Voice>>::const_iterator it = mVoices.begin();
       it != mVoices.end(); it++)
     out.push_back(it->first);
   

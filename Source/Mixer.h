@@ -12,6 +12,7 @@
 #define MIXER_H_INCLUDED
 
 #include <map>
+#include "../JuceLibraryCode/JuceHeader.h"
 #include "Voice.h"
 #include "VoiceBank.h"
 #include "Hub.h"
@@ -24,11 +25,11 @@ class Mixer
 
     double mix();
 
-    bool setBoardVal (const char* key, double val);
-    std::map<const char*,double> getBoardData () const; // does not modify board
+    bool setBoardVal (String key, double val);
+    std::map<String,double> getBoardData () const; // does not modify board
 
   private:
-    std::map<const char*, double> mBoard;
+    std::map<String, double> mBoard;
 
     const VoiceBank& mModifiers; // read only
     Voice& mCore; // will be modified when mixing happens

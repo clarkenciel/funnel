@@ -15,6 +15,7 @@ Author:  Danny Clarke
 #include <memory>
 #include <vector>
 #include <utility>
+#include "../JuceLibraryCode/JuceHeader.h"
 #include "Voice.h"
 
 class VoiceBank
@@ -23,22 +24,22 @@ class VoiceBank
     VoiceBank ();
     ~VoiceBank ();
 
-    int addVoice (const char* key); // returns index of new voice
-    int removeVoice (const char* key); // returns new size of voices vector
+    int addVoice (String key); // returns index of new voice
+    int removeVoice (String key); // returns new size of voices vector
     int getNumVoices () const; // return size of voices vector
 
-    bool addValueToVoice (const char* key, double value);
-    bool setVoiceAmp (const char* key, double value);
-    bool hasVoice (const char* key) const;
+    bool addValueToVoice (String key, double value);
+    bool setVoiceAmp (String key, double value);
+    bool hasVoice (String key) const;
 
     std::vector<double> getNextValues ();
     std::vector<double> getCurrentValues () const; // only reads so const
-    std::vector<const char*> getStreamNames () const;
-    std::map<const char*, double> getAmplitudes () const;
+    std::vector<String> getStreamNames () const;
+    std::map<String, double> getAmplitudes () const;
 
   private:
     int mNumVoices;
-    std::map<const char*, std::unique_ptr<Voice>> mVoices;
+    std::map<String, std::unique_ptr<Voice>> mVoices;
 
 };
 

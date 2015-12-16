@@ -52,7 +52,7 @@ Mixer::mix ()
 }
 
 bool
-Mixer::setBoardVal (const char* key, double val)
+Mixer::setBoardVal (String key, double val)
 {
   try
   {
@@ -71,7 +71,7 @@ Mixer::setBoardVal (const char* key, double val)
 /*
  * Return the mixing board data
  */
-std::map<const char*, double> 
+std::map<String, double> 
 Mixer::getBoardData () const
 { return mBoard; }
 

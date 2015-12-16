@@ -30,10 +30,10 @@ class IncomingEditor : public Component,
   private:
     Hub& mHub;
 
-    std::map<const char*, std::unique_ptr<Slider>> mConnections;
+    std::map<String, std::unique_ptr<Slider>> mConnections;
 
     void sliderValueChanged (Slider* sliderThatHasChanged) override;
-    bool hasSlider(const char* name);
+    bool hasSlider(String name);
     bool hasSlider(Slider* slider);
 };
 

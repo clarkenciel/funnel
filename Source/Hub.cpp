@@ -15,9 +15,7 @@
 Hub::Hub (String address, VoiceBank& is, const Voice& os)
   : mIncoming(is),
     mOutgoing(os),
-    mAddress(address),
-    mTargets(0),
-    mPotentialTargets(0)
+    mAddress(address)
 {
   std::cout << "Hub with IP: " << mAddress.toRawUTF8() << std::endl;
   // set up listening
@@ -35,7 +33,7 @@ Hub::~Hub ()
 void
 Hub::send ()
 {
-  for (std::vector<const char*>::const_iterator tgt = mTargets.begin();
+  for (std::vector<String>::const_iterator tgt = mTargets.begin();
        tgt != mTargets.end(); tgt++)
   {
     output.connect(*tgt, PORT);
@@ -54,15 +52,15 @@ Hub::send ()
  * Keys are IPs, targets are OSCSenders
  */
 void
-Hub::addTarget (const char* ip)
+Hub::addTarget (String ip)
 {
   mTargets.push_back(ip);
 }
 
 void
-Hub::removeTarget (const char* ip)
+Hub::removeTarget (String ip)
 {
-  std::vector<const char*>::iterator it = mTargets.begin();
+  std::vector<String>::iterator it = mTargets.begin();
 
   // iterate through, only stopping at match or end
   for (; it != mTargets.end() || *it != ip; it++)
@@ -76,19 +74,19 @@ Hub::removeTarget (const char* ip)
   }
 }
 
-std::vector<const char*>
+std::vector<String>
 Hub::getCurrentIncoming () const
 {
   return mIncoming.getStreamNames();
 }
 
-std::vector<const char*>
+std::vector<String>
 Hub::getCurrentTargets () const
 {
   return mTargets;
 }
 
-std::vector<const char*>
+std::vector<String>
 Hub::getPotentialTargets () const
 {
   return mPotentialTargets;
@@ -102,7 +100,7 @@ Hub::seekPeers ()
 {
   std::cout << "broadcasting: " << mAddress << std::endl;
   greeter.connect("255.255.255.255", PORT);
-  greeter.send("/funnel/hello", String(mAddress));
+  greeter.send("/funnel/hello", mAddress);
 }
 
 /* Dispatchees for received messages */
@@ -114,32 +112,37 @@ Hub::oscMessageReceived (const OSCMessage& msg)
   std::cout << "receiving from: " << msg[0].getString() << std::endl;
 
   // msg[0] will always be IP
-  if (address == String("/funnel/hello"))
+  if (address == "/funnel/hello")
     greet(msg[0]);
-  else if (address == String("/funnel/active"))
+  else if (address == "/funnel/active")
     capture(msg[0], msg[1]);  // msg[1] will be a new value
-  else if (address == String("/funnel/inactive"))
+  else if (address == "/funnel/inactive")
     detach(msg[0]);
   else
     std::cerr << "OSC Adress \"" << mAddress << "\" not handled." << std::endl;
 }
 
 void
-Hub::removeIncoming (const char* ip)
+Hub::removeIncoming (String ip)
 {
   mIncoming.removeVoice(ip);
 }
 
 void
-Hub::addIncoming (const char* ip)
+Hub::addIncoming (String ip)
 {
   mIncoming.addVoice(ip);
 }
 
 void
-Hub::addPotentialTarget (const char* ip)
+Hub::addPotentialTarget (String ip)
 {
-  mPotentialTargets.push_back(ip);
+  if (ip != "" || ip != "funnel" || ip != "hello" 
+      || ip != "/funnel/hello" || !hasPotentialTarget(ip))
+  {
+    //std::cout << mAddress << " adding: " << ip << std::endl;
+    mPotentialTargets.push_back(ip);
+  }
 }
 
 void
@@ -148,16 +151,15 @@ Hub::greet (OSCArgument& arg)
   String ip = arg.getString();
 
   // seems strane that this isn't !mAddress.compare ...
-  if (!(mAddress == ip) && !(ip.compare("255.255.255.255")))
+  if (!(mAddress == ip))
   {
-    std::cout << mAddress << " not same as " << ip << std::endl;
     bool found = hasPotentialTarget(ip.toRawUTF8());
 
     // if we have not seen the address before,
     // take note 
     if (!found) 
     {
-      addPotentialTarget(ip.toRawUTF8()); // toRawUTF8 returns const char*
+      addPotentialTarget(ip.toRawUTF8()); // toRawUTF8 returns String
 
       // and respond with our IP
       greeter.connect("255.255.255.255", PORT);
@@ -172,7 +174,7 @@ Hub::greet (OSCArgument& arg)
 void
 Hub::capture (OSCArgument& name, OSCArgument& val)
 {
-  const char* ip = name.getString().toRawUTF8();
+  String ip = name.getString().toRawUTF8();
   bool found = mIncoming.hasVoice(ip);
 
   // if we have not seen the address before,
@@ -189,19 +191,19 @@ Hub::capture (OSCArgument& name, OSCArgument& val)
 void
 Hub::detach (OSCArgument& name)
 {
-  const char* ip = name.getString().toRawUTF8();
+  String ip = name.getString().toRawUTF8();
   bool found = mIncoming.hasVoice(ip);
 
   // if we are currently working with the voice, remove it
-  if (found) 
+  if (!found) 
     mIncoming.removeVoice(ip);
 }
 
 bool
-Hub::hasPotentialTarget (const char* name) const
+Hub::hasPotentialTarget (String name) const
 {
   // see if we have the ip as a potential target already
-  for (std::vector<const char*>::const_iterator it = mPotentialTargets.begin();
+  for (std::vector<String>::const_iterator it = mPotentialTargets.begin();
        it != mPotentialTargets.end(); it++)
   {
     if (name == *it)
@@ -212,20 +214,15 @@ Hub::hasPotentialTarget (const char* name) const
 }
 
 bool
-Hub::hasCurrentTarget (const char* name) const
+Hub::hasCurrentTarget (String name) const
 {
-  bool found = false;
-
   // see if we have the ip as a potential target already
-  for (std::vector<const char*>::const_iterator it = mTargets.begin();
+  for (std::vector<String>::const_iterator it = mTargets.begin();
        it != mTargets.end(); it++)
   {
     if (name == *it)
-    {
-      found = true;
-      break;
-    }
+      return true;
   }
 
-  return found;
+  return false;
 }

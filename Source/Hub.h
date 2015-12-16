@@ -32,15 +32,15 @@ class Hub : public OSCReceiver,
 
     void oscMessageReceived (const OSCMessage& message) override;
     void send (); // only reads
-    void addTarget (const char* ip);
-    void removeTarget (const char* ip);
+    void addTarget (String ip);
+    void removeTarget (String ip);
     void seekPeers ();
-    bool hasPotentialTarget (const char* ip) const;
-    bool hasCurrentTarget (const char* ip) const;
+    bool hasPotentialTarget (String ip) const;
+    bool hasCurrentTarget (String ip) const;
 
-    std::vector<const char*> getCurrentIncoming () const;
-    std::vector<const char*> getCurrentTargets () const;
-    std::vector<const char*> getPotentialTargets () const;
+    std::vector<String> getCurrentIncoming () const;
+    std::vector<String> getCurrentTargets () const;
+    std::vector<String> getPotentialTargets () const;
 
     // SO BAD!!!!
     VoiceBank& mIncoming; // we mutate these
@@ -53,18 +53,17 @@ class Hub : public OSCReceiver,
     OSCSender output, greeter;
 
     // store IPs
-    std::vector<const char*> mTargets; 
-    std::vector<const char*> mPotentialTargets; 
+    std::vector<String> mTargets; 
+    std::vector<String> mPotentialTargets; 
 
 
-    void addIncoming (const char* ip);
-    void removeIncoming (const char* ip);
+    void addIncoming (String ip);
+    void removeIncoming (String ip);
     void greet (OSCArgument& name); // add new potential target and respond
     void capture (OSCArgument& name, OSCArgument& val);
     void detach (OSCArgument& name);
-    void addPotentialTarget (const char* ip);
+    void addPotentialTarget (String ip);
 
 };
-
 
 #endif  // HUB_H_INCLUDED
