@@ -61,6 +61,7 @@ void
 Hub::removeTarget (String ip)
 {
   std::vector<String>::iterator it = mTargets.begin();
+  std::cout << "Removing Target" << std::endl;
 
   // iterate through, only stopping at match or end
   for (; it != mTargets.end() || *it != ip; it++)
@@ -176,7 +177,6 @@ Hub::capture (OSCArgument& name, OSCArgument& val)
 
   // if we have not seen the address before,
   // create a new voice
-  std::cout << "Capturing/updating: " << ip << std::endl;
   if (!mIncoming.hasVoice(ip)) 
   {
     mIncoming.addVoice(ip);
