@@ -20,18 +20,27 @@ void
 OutgoingEditor::buttonClicked (Button* button)
 {
   updateTargets();
+  bool togState;
+
   for (std::vector<std::unique_ptr<ToggleButton>>::iterator it = mTargets.begin();
        it != mTargets.end(); it++)
   {
     if (button == (*it).get())
-      (*it)->setToggleState(!(*it)->getToggleState(), dontSendNotification);
+    {
+      togState = (*it)->getToggleState();
+      (*it)->setToggleState(!togState, dontSendNotification);
+      if (togState)
+        mHub.addTarget((*it)->getName());
+      else
+        mHub.removeTarget((*it)->getName());
+    }
   }
 }
 
 void
 OutgoingEditor::paint (Graphics& g)
 {
-  g.fillAll (Colours::white);
+  g.fillAll (Colours::red);
   updateTargets();
 }
 

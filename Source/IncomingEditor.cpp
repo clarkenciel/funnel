@@ -26,7 +26,7 @@ IncomingEditor::sliderValueChanged (Slider* slider)
 void
 IncomingEditor::paint (Graphics& g)
 {
-  g.fillAll (Colours::white);
+  g.fillAll (Colours::blue);
   updateIncoming();
 }
 
@@ -39,15 +39,21 @@ void
 IncomingEditor::updateIncoming ()
 {
   std::vector<String> incoming = mHub.getCurrentIncoming();
+  int cnt = 0, w = getWidth(), h = getHeight();
+  float num = (float) incoming.size();
+
   for (std::vector<String>::iterator tgt = incoming.begin();
        tgt != incoming.end(); tgt++)
   {
     if (!hasSlider(*tgt))
     {
+      std::cout << "Adding incoming connection" << std::endl;
       mConnections.emplace(*tgt,
           std::unique_ptr<Slider>(new Slider(*tgt)));
-      (*mConnections.end()->second).setSliderStyle(Slider::LinearHorizontal);
-      (*mConnections.end()->second).setRange(0.0,1.0,0.01);
+      Slider& sldr =  (*mConnections.end()->second);
+      sldr.setSliderStyle(Slider::LinearHorizontal);
+      sldr.setRange(0.0,1.0,0.01);
+      sldr.setBounds(0, cnt * (h / num), w, cnt * (h / num) + (h / num));
       addAndMakeVisible(mConnections.at(*tgt).get());
     }
   }
