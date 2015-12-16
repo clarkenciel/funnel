@@ -109,7 +109,6 @@ void
 Hub::oscMessageReceived (const OSCMessage& msg)
 {
   String address = msg.getAddressPattern().toString();
-  std::cout << "receiving from: " << msg[0].getString() << std::endl;
 
   // msg[0] will always be IP
   if (address == "/funnel/hello")
@@ -153,15 +152,14 @@ Hub::greet (OSCArgument& arg)
   // seems strane that this isn't !mAddress.compare ...
   if (!(mAddress == ip))
   {
-    bool found = hasPotentialTarget(ip.toRawUTF8());
-
     // if we have not seen the address before,
     // take note 
-    if (!found) 
+    if (!hasPotentialTarget(ip)) 
     {
-      addPotentialTarget(ip.toRawUTF8()); // toRawUTF8 returns String
+      addPotentialTarget(ip); // toRawUTF8 returns String
 
       // and respond with our IP
+      std::cout << "Greeting: " << ip << std::endl;
       greeter.connect("255.255.255.255", PORT);
       greeter.send("/funnel/hello", mAddress);
     }
@@ -174,12 +172,12 @@ Hub::greet (OSCArgument& arg)
 void
 Hub::capture (OSCArgument& name, OSCArgument& val)
 {
-  String ip = name.getString().toRawUTF8();
-  bool found = mIncoming.hasVoice(ip);
+  String ip = name.getString();
 
   // if we have not seen the address before,
   // create a new voice
-  if (!found) 
+  std::cout << "Capturing/updating: " << ip << std::endl;
+  if (!mIncoming.hasVoice(ip)) 
   {
     mIncoming.addVoice(ip);
     mIncoming.addValueToVoice(ip, val.getFloat32());
@@ -191,11 +189,11 @@ Hub::capture (OSCArgument& name, OSCArgument& val)
 void
 Hub::detach (OSCArgument& name)
 {
-  String ip = name.getString().toRawUTF8();
-  bool found = mIncoming.hasVoice(ip);
+  String ip = name.getString();
 
   // if we are currently working with the voice, remove it
-  if (!found) 
+  std::cout << "Detaching: " << ip << std::endl;
+  if (!mIncoming.hasVoice(ip))
     mIncoming.removeVoice(ip);
 }
 

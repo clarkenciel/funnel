@@ -20,7 +20,7 @@ IncomingEditor::sliderValueChanged (Slider* slider)
 {
   // SO BAD!!!!
   if (hasSlider(slider))
-    mHub.mIncoming.setVoiceAmp(slider->getName().toRawUTF8(), slider->getValue());
+    mHub.mIncoming.setVoiceAmp(slider->getName(), slider->getValue());
 }
 
 void
@@ -45,12 +45,13 @@ IncomingEditor::updateIncoming ()
     if (!hasSlider(*tgt))
     {
       mConnections.emplace(*tgt,
-          std::unique_ptr<Slider>(new Slider(String(*tgt))));
+          std::unique_ptr<Slider>(new Slider(*tgt)));
       (*mConnections.end()->second).setSliderStyle(Slider::LinearHorizontal);
       (*mConnections.end()->second).setRange(0.0,1.0,0.01);
       addAndMakeVisible(mConnections.at(*tgt).get());
     }
   }
+  std::cout << "Num Incoming: " << mConnections.size() << std::endl;
 }
 
 bool

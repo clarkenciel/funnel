@@ -55,10 +55,11 @@ OutgoingEditor::updateTargets ()
     {
       mTargets.push_back(
           std::unique_ptr<ToggleButton>(new ToggleButton(String(*tgt))));
-      std::cout << "Target: " << *tgt << std::endl;
-      ToggleButton& btn= **(mTargets.end() - 1);
-      btn.setBounds(0, cnt * (h / num), w, cnt++ * (h / num) + (h / num));
+      std::cout << "Target: " << *tgt << " Count: " << cnt << std::endl;
+      ToggleButton& btn = **(mTargets.end() - 1);
+      btn.setBounds(0, cnt * (h / num), w, cnt * (h / num) + (h / num));
       addAndMakeVisible(btn);
+      cnt++;
     }
   }
   std::cout << "Num Outgoing: " << mHub.getPotentialTargets().size() << std::endl;
@@ -71,7 +72,7 @@ OutgoingEditor::hasButton(String name)
 
   for (btn = mTargets.begin(); btn != mTargets.end(); btn++)
   {
-    if ((*btn)->getButtonText().compare(name))
+    if ((*btn)->getButtonText() == name)
       return true;
   }
   return false;
