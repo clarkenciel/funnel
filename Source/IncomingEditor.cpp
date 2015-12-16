@@ -54,6 +54,7 @@ IncomingEditor::updateIncoming ()
       sldr.setSliderStyle(Slider::LinearHorizontal);
       sldr.setRange(0.0,1.0,0.01);
       sldr.setBounds(0, cnt * (h / num), w, cnt * (h / num) + (h / num));
+      sldr.addListener(this);
       addAndMakeVisible(mConnections.at(*tgt).get());
     }
   }

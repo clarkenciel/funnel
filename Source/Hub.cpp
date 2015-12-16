@@ -37,7 +37,6 @@ Hub::send ()
        tgt != mTargets.end(); tgt++)
   {
     output.connect(*tgt, PORT);
-    std::cout << "sending to: " << *tgt << std::endl;
     if (! output.send("/funnel/active",
                       mAddress,
                       (float) mOutgoing.getCurrentValue()) )
@@ -45,18 +44,19 @@ Hub::send ()
   }
 }
 
-
 /*
- * Add a new target to the targets map.
- *
- * Keys are IPs, targets are OSCSenders
+ * Add a new target to the targets vector.
  */
 void
 Hub::addTarget (String ip)
 {
+  std::cout << "Adding Target: " << ip << std::endl;
   mTargets.push_back(ip);
 }
 
+/*
+ * Remove a target from the targets vector
+ */
 void
 Hub::removeTarget (String ip)
 {

@@ -67,6 +67,7 @@ OutgoingEditor::updateTargets ()
       std::cout << "Target: " << *tgt << " Count: " << cnt << std::endl;
       ToggleButton& btn = **(mTargets.end() - 1);
       btn.setBounds(0, cnt * (h / num), w, cnt * (h / num) + (h / num));
+      btn.addListener(this);
       addAndMakeVisible(btn);
       cnt++;
     }

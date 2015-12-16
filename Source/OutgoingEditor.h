@@ -25,13 +25,13 @@ class OutgoingEditor : public Component,
 
     void paint (Graphics& g);
     void updateTargets();
+    void buttonClicked (Button* button) override;
 
   private:
     Hub& mHub;
 
     std::vector<std::unique_ptr<ToggleButton>> mTargets;
 
-    void buttonClicked (Button* button) override;
     bool hasButton (String name);
 };
 
