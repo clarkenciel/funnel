@@ -25,6 +25,7 @@ class IncomingEditor : public Component,
     
 
     void paint (Graphics& g);
+    void updateIncoming ();
 
   private:
     Hub& mHub;
@@ -32,7 +33,6 @@ class IncomingEditor : public Component,
     std::map<const char*, std::unique_ptr<Slider>> mConnections;
 
     void sliderValueChanged (Slider* sliderThatHasChanged) override;
-    void updateIncoming ();
     bool hasSlider(const char* name);
     bool hasSlider(Slider* slider);
 };

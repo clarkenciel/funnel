@@ -13,9 +13,9 @@
 #define PORT 57001
 
 Hub::Hub (String address, VoiceBank& is, const Voice& os)
-  : mAddress(address),
-    mIncoming(is),
+  : mIncoming(is),
     mOutgoing(os),
+    mAddress(address),
     mTargets(0),
     mPotentialTargets(0)
 {
@@ -27,6 +27,8 @@ Hub::Hub (String address, VoiceBank& is, const Voice& os)
   connect(PORT);
 }
 
+Hub::~Hub ()
+{}
 
 /* Primary exposed interface */
 
@@ -109,7 +111,8 @@ void
 Hub::oscMessageReceived (const OSCMessage& msg)
 {
   String address = msg.getAddressPattern().toString();
-    std::cerr << "Received: " << address << std::endl;
+  std::cout << "receiving from: " << msg[0].getString() << std::endl;
+
   // msg[0] will always be IP
   if (address == String("/funnel/hello"))
     greet(msg[0]);
@@ -142,16 +145,20 @@ Hub::addPotentialTarget (const char* ip)
 void
 Hub::greet (OSCArgument& arg)
 {
-  const char* ip = arg.getString().toRawUTF8();
-  bool found = hasPotentialTarget(ip);
-
-  // if we have not seen the address before,
-  // take note and respond with our IP
-  if (!found) 
+  String ip = arg.getString();
+  if (mAddress.compare(ip))
   {
-    addPotentialTarget(ip); // toRawUTF8 returns const char*
+    std::cout << mAddress << " not same as " << ip << std::endl;
+    bool found = hasPotentialTarget(ip.toRawUTF8());
+
+    // if we have not seen the address before,
+    // take note and respond with our IP
+    if (!found) 
+    {
+      addPotentialTarget(ip.toRawUTF8()); // toRawUTF8 returns const char*
+    }
     greeter.connect("255.255.255.255", PORT);
-    greeter.send("/funnel/hello", String(mAddress));
+    greeter.send("/funnel/hello", mAddress);
   }
 }
 

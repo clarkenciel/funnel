@@ -19,6 +19,7 @@ OutgoingEditor::OutgoingEditor (Hub& hub, String name)
 void
 OutgoingEditor::buttonClicked (Button* button)
 {
+  updateTargets();
   for (std::vector<std::unique_ptr<ToggleButton>>::iterator it = mTargets.begin();
        it != mTargets.end(); it++)
   {
@@ -43,16 +44,23 @@ void
 OutgoingEditor::updateTargets ()
 {
   std::vector<const char*> potential = mHub.getPotentialTargets();
+  int cnt = 0, w = getWidth(), h = getHeight();
+  float num = (float) potential.size();
+
   for (std::vector<const char*>::iterator tgt = potential.begin();
        tgt != potential.end(); tgt++)
   {
+    // set up a new button
     if (!hasButton(*tgt))
     {
       mTargets.push_back(
           std::unique_ptr<ToggleButton>(new ToggleButton(String(*tgt))));
-      addAndMakeVisible(**(mTargets.end() - 1));
+      ToggleButton& btn= **(mTargets.end() - 1);
+      btn.setBounds(0, cnt * (h / num), w, cnt++ * (h / num) + (h / num));
+      addAndMakeVisible(btn);
     }
   }
+  std::cout << "Num Outgoing: " << mHub.getPotentialTargets().size() << std::endl;
 }
 
 bool

@@ -28,7 +28,7 @@ class Hub : public OSCReceiver,
 {
   public:
     Hub (String address, VoiceBank& inStreams, const Voice& outStream);
-
+    ~Hub ();
 
     void oscMessageReceived (const OSCMessage& message) override;
     void send (); // only reads
@@ -63,8 +63,6 @@ class Hub : public OSCReceiver,
     void capture (OSCArgument& name, OSCArgument& val);
     void detach (OSCArgument& name);
     void addPotentialTarget (const char* ip);
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Hub)
 
 };
 
